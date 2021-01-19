@@ -1,0 +1,84 @@
+
+{% load static %}
+{% load custom_tags %}
+
+<div class="col-lg-4 col-md-5">
+    <div class="blog__sidebar">
+
+        {% include 'search.html' %}
+
+
+
+        <div class="blog__sidebar__item">
+            <h4>Categories</h4>
+            <ul>
+                <li><a href="#">All</a></li>
+
+
+                {% categories as categories %}
+                {% for category in categories %}
+                <li><a href="{% url 'blog:post_by_category' category.slug %}">
+                    {{ category.category_name  }} ({{ category.post_count }})</a>
+                </li>
+                {% endfor %}
+
+
+
+            </ul>
+        </div>
+        <div class="blog__sidebar__item">
+            <h4>Recent News</h4>
+            <div class="blog__sidebar__recent">
+
+                {% recent_posts as posts %}
+
+                {% for post in posts %}
+
+
+                <a href="{% url 'blog:post_detail' post.id %}" class="blog__sidebar__recent__item">
+                    <div class="blog__sidebar__recent__item__pic">
+                        <img src="{{ post.image.url }}" alt="" style="width:80px;">
+                    </div>
+                    <div class="blog__sidebar__recent__item__text">
+                        <h6>{{ post.title|slice:":25" }}</h6>
+                        <span>{{ post.created }}</span>
+                    </div>
+                </a>
+
+                {% endfor %}
+
+                <a href="#" class="blog__sidebar__recent__item">
+                    <div class="blog__sidebar__recent__item__pic">
+                        <img src="{% static 'master/img/blog/sidebar/sr-2.jpg' %}" alt="">
+                    </div>
+                    <div class="blog__sidebar__recent__item__text">
+                        <h6>Tips You To Balance<br /> Nutrition Meal Day</h6>
+                        <span>MAR 05, 2019</span>
+                    </div>
+                </a>
+                <a href="#" class="blog__sidebar__recent__item">
+                    <div class="blog__sidebar__recent__item__pic">
+                        <img src="{% static 'master/img/blog/sidebar/sr-3.jpg' %}" alt="">
+                    </div>
+                    <div class="blog__sidebar__recent__item__text">
+                        <h6>4 Principles Help You Lose <br />Weight With Vegetables</h6>
+                        <span>MAR 05, 2019</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="blog__sidebar__item">
+            <h4>Search By</h4>
+            <div class="blog__sidebar__item__tags">
+
+                {% tags as tags %}
+                {% for tag in tags %}
+
+                <a href="{% url 'blog:post_by_tag' tag.name %}">{{ tag.name }}</a>
+
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,198 @@
+{% extends 'base.html' %}
+
+{%  block title %}
+    Post
+{% endblock %}
+
+{% load static %}
+
+{% block content %}
+
+
+
+<!-- Hero Section Begin -->
+    <section class="hero hero-normal">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="hero__categories">
+                        <div class="hero__categories__all">
+                            <i class="fa fa-bars"></i>
+                            <span>All departments</span>
+                        </div>
+                        <ul>
+                            <li><a href="#">Fresh Meat</a></li>
+                            <li><a href="#">Vegetables</a></li>
+                            <li><a href="#">Fruit & Nut Gifts</a></li>
+                            <li><a href="#">Fresh Berries</a></li>
+                            <li><a href="#">Ocean Foods</a></li>
+                            <li><a href="#">Butter & Eggs</a></li>
+                            <li><a href="#">Fastfood</a></li>
+                            <li><a href="#">Fresh Onion</a></li>
+                            <li><a href="#">Papayaya & Crisps</a></li>
+                            <li><a href="#">Oatmeal</a></li>
+                            <li><a href="#">Fresh Bananas</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-9">
+                    <div class="hero__search">
+                        <div class="hero__search__form">
+                            <form action="#">
+                                <div class="hero__search__categories">
+                                    All Categories
+                                    <span class="arrow_carrot-down"></span>
+                                </div>
+                                <input type="text" placeholder="What do yo u need?">
+                                <button type="submit" class="site-btn">SEARCH</button>
+                            </form>
+                        </div>
+                        <div class="hero__search__phone">
+                            <div class="hero__search__phone__icon">
+                                <i class="fa fa-phone"></i>
+                            </div>
+                            <div class="hero__search__phone__text">
+                                <h5>+65 11.188.888</h5>
+                                <span>support 24/7 time</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Hero Section End -->
+
+    <!-- Breadcrumb Section Begin -->
+    <section class="breadcrumb-section set-bg" data-setbg="{% static 'master/img/breadcrumb.jpg' %}">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="breadcrumb__text">
+                        <h2>Blog</h2>
+                        <div class="breadcrumb__option">
+                            <a href="./index.html">Home</a>
+                            <span>Blog</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Breadcrumb Section End -->
+
+    <!-- Blog Section Begin -->
+    <section class="blog spad">
+        <div class="container">
+            <div class="row">
+
+
+
+                {% include 'left_side.html' %}
+
+
+
+
+
+                <div class="col-lg-8 col-md-7">
+                    <div class="row">
+
+                        {% if post_list %}
+
+                        {% for post in post_list %}
+
+
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <div class="blog__item">
+                                <div class="blog__item__pic">
+                                    <img src="{{ post.image.url }}" alt="">
+                                </div>
+                                <div class="blog__item__text">
+                                    <ul>
+                                        <li><i class="fa fa-calendar-o"></i> {{ post.created }}</li>
+                                        <li><i class="fa fa-comment-o"></i> {{ post.comment_count }}</li>
+                                    </ul>
+                                    <h5><a href="{% url 'blog:post_detail' post.id %}">{{ post.title }}</a></h5>
+                                    <p>{{ post.content|slice:":40" }} </p>
+                                    <a href="{% url 'blog:post_detail' post.id %}" class="blog__btn">READ MORE <span class="arrow_right"></span></a>
+                                </div>
+                            </div>
+                        </div>
+
+                        {% endfor %}
+                        {% endif %}
+
+
+
+
+                        <div class="col-lg-12">
+
+
+                            <div class="product__pagination">
+
+
+                    <div class="pagination-box p-box-2 text-center">
+                    <nav aria-label="Page navigation example">
+                        {% if post_list.has_other_pages %}
+
+                        <ul class="pagination">
+
+                            {% if  post_list.has_previous %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ post_list.previous_page_number }}"><i class="fa fa-angle-left"></i></a>
+                                </li>
+                            {% else %}
+                            <li class="page-item disabled">
+                                <a class="page-link"><i class="fa fa-angle-left"></i></a>
+                            </li>
+                            {% endif %}
+
+
+
+
+                            {% for i in post_list.paginator.page_range  %}
+                            {% if featured_cars.number == i %}
+                                <li class="page-item"><a class="page-link active" href="#">{{ i }}</a></li>
+                            {% else %}
+
+                                <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                            {% endif %}
+                            {% endfor %}
+
+
+
+
+                            {% if  post_list.has_next %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ post_list.next_page_number }}"><i class="fa fa-angle-right"></i></a>
+                                </li>
+                            {% else %}
+                            <li class="page-item disabled">
+                                <a class="page-link"><i class="fa fa-angle-right"></i></a>
+                            </li>
+                            {% endif %}
+                        </ul>
+
+                        {% endif %}
+                    </nav>
+                </div>
+
+
+
+                    </div>
+
+
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Blog Section End -->
+
+
+
+{% endblock %}
